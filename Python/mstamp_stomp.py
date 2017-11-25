@@ -11,7 +11,7 @@ import numpy as np
 _EPS = 1e-14
 
 
-def mstamp(seq, sub_len):
+def mstamp(seq, sub_len, return_dimension=False):
     """ multidimensional matrix profile with mSTAMP (stomp based)
 
     Parameters
@@ -20,6 +20,9 @@ def mstamp(seq, sub_len):
         input sequence
     sub_len : int
         subsequence length
+    return_dimension : bool
+        if True, also return the matrix profile dimension. It takses O(d^2 n)
+        to store and O(d^2 n^2) to compute. (default is False)
 
     Returns
     -------
@@ -27,8 +30,9 @@ def mstamp(seq, sub_len):
         matrix profile
     profile_index : numpy matrix, shape (n_dim, sub_num)
         matrix profile index
-    profile_dimension : list, shape (n_dim)
-        matrix profile dimension
+    profile_dimension : list, optional, shape (n_dim)
+        matrix profile dimension, this is only returned when return_dimension
+        is True
 
     Notes
     -----
@@ -58,9 +62,11 @@ def mstamp(seq, sub_len):
     seq_freq = np.empty((n_dim, seq_len * 2), dtype=np.complex128)
     seq_mu = np.empty((n_dim, sub_num))
     seq_sig = np.empty((n_dim, sub_num))
-    profile_dimension = []
+    if return_dimension:
+        profile_dimension = []
+        for i in range(n_dim):
+            profile_dimension.append(np.empty((i + 1, sub_num), dtype=int))
     for i in range(n_dim):
-        profile_dimension.append(np.empty((i + 1, sub_num), dtype=int))
         seq_freq[i, :], seq_mu[i, :], seq_sig[i, :] = \
             _mass_pre(seq[i, :], sub_len)
 
@@ -124,11 +130,15 @@ def mstamp(seq, sub_len):
             update_pos = dist_profile_mean < matrix_profile[j, :]
             profile_index[j, update_pos] = i
             matrix_profile[j, update_pos] = dist_profile_mean[update_pos]
-            profile_dimension[j][:, update_pos] = \
-                dist_profile_dim[:j + 1, update_pos]
+            if return_dimension:
+                profile_dimension[j][:, update_pos] = \
+                    dist_profile_dim[:j + 1, update_pos]
 
     matrix_profile = np.sqrt(matrix_profile)
-    return matrix_profile, profile_index, profile_dimension
+    if return_dimension:
+        return matrix_profile, profile_index, profile_dimension
+    else:
+        return matrix_profile, profile_index,
 
 
 def _mass_pre(seq, sub_len):

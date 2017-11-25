@@ -13,10 +13,11 @@ import matplotlib.pyplot as plt
 from mstamp_stomp import mstamp as mstamp_stomp
 from mstamp_stamp import mstamp as mstamp_stamp
 
+
 def plot_motifs(matrix_profile, dimensionality=1):
     motif_at = matrix_profile[dimensionality - 1, :].argsort()[:2]
 
-    fig = plt.figure(figsize=(14, 7))
+    plt.figure(figsize=(14, 7))
     for i in range(3):
         plt.subplot(4, 1, i + 1)
         plt.plot(data.T[i, :])
@@ -33,6 +34,7 @@ def plot_motifs(matrix_profile, dimensionality=1):
     plt.xlim((0, matrix_profile.shape[1]))
     plt.tight_layout()
 
+
 if __name__ == '__main__':
     mat = sio.loadmat('toy_data.mat')
     data = mat['data']
@@ -40,7 +42,8 @@ if __name__ == '__main__':
 
     # using the stomp based method to compute the multidimensional matrix
     # profile
-    [mat_pro_1, pro_idx_1, pro_dim_1] = mstamp_stomp(data.T, sub_len)
+    mat_pro_1, pro_idx_1 = mstamp_stomp(data.T, sub_len,
+                                        return_dimension=False)
 
     # plot the matrix profile as image
     plt.figure()
@@ -49,7 +52,8 @@ if __name__ == '__main__':
 
     # using the stamp based method to compute the multidimensional matrix
     # profile
-    [mat_pro_2, pro_idx_2, pro_dim_2] = mstamp_stamp(data.T, sub_len)
+    mat_pro_2, pro_idx_2 = mstamp_stamp(data.T, sub_len,
+                                        return_dimension=False)
 
     # plot the matrix profile as image
     plt.figure()
