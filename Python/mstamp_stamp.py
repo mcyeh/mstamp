@@ -44,7 +44,7 @@ def mstamp(seq, sub_len, return_dimension=False):
     if sub_len < 4:
         raise RuntimeError('Subsequence length (sub_len) must be at least 4')
     exc_zone = sub_len // 2
-    seq = seq.copy()
+    seq = np.array(seq, dtype=float, copy=True)
 
     seq_len = seq.shape[1]
     sub_num = seq.shape[1] - sub_len + 1
