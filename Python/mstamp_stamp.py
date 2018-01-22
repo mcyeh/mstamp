@@ -46,6 +46,9 @@ def mstamp(seq, sub_len, return_dimension=False):
     exc_zone = sub_len // 2
     seq = seq.copy()
 
+    if seq.ndim == 1:
+        seq = np.expand_dims(seq, axis=0)
+
     seq_len = seq.shape[1]
     sub_num = seq.shape[1] - sub_len + 1
     n_dim = seq.shape[0]

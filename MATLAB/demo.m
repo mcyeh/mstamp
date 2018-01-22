@@ -74,3 +74,9 @@ k = 2; % number of motif to retrieve
 [motif_idx, motif_dim] = unconstrain_search(...
     data, sub_len, pro_mul, pro_idx, n_bit, k);
 plot_motif_on_data(data, sub_len, motif_idx, motif_dim);
+
+%% the function can also be used to compute the 1D matrix profile
+[pro_mul_2, ~] = ...
+    mstamp(data(:, 2), sub_len, must_dim, exc_dim);
+figure();
+plot(pro_mul_2);

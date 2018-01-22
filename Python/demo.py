@@ -62,4 +62,15 @@ if __name__ == '__main__':
 
     plot_motifs(mat_pro_2)
 
+    # the function can also be used to compute the 1D matrix profile
+    mat_pro_3, _ = mstamp_stomp(data[:, 1].T, sub_len,
+                                return_dimension=False)
+    plt.figure()
+    plt.plot(mat_pro_3[0, :])
+
+    mat_pro_4, _ = mstamp_stamp(data[:, 1].T, sub_len,
+                                return_dimension=False)
+    plt.figure()
+    plt.plot(mat_pro_4[0, :])
+
     plt.show()
