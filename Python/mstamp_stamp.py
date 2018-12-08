@@ -83,7 +83,7 @@ def mstamp(seq, sub_len, return_dimension=False):
                       cur_prog * 100, time_left), end="")
         for j in range(n_dim):
             que = seq[j, i:i + sub_len]
-            dist_profile[j, :], que_sig = _mass(
+            dist_profile[j, :], que_sig[j] = _mass(
                 seq_freq[j, :], que, seq_len, sub_len,
                 seq_mu[j, :], seq_sig[j, :])
 
