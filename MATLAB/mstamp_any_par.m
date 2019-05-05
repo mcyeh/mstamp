@@ -111,7 +111,8 @@ parfor i = 1:n_work
         end
         dist_pro = real(dist_pro);
         dist_pro = max(dist_pro, 0);
-
+        dist_pro = sqrt(dist_pro);
+    
         % apply exclusion zone
         exc_zone_st = max(1, idx - exc_zone);
         exc_zone_ed = min(pro_len, idx + exc_zone);
@@ -134,7 +135,7 @@ parfor i = 1:n_work
             pro_idxs{i}(update_idx, k) = idx;
         end
     end
-    pro_muls{i} = sqrt(pro_muls{i});
+%     pro_muls{i} = sqrt(pro_muls{i});
 end
 
 %% merge workers' result

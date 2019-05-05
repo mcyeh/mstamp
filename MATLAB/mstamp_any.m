@@ -91,7 +91,8 @@ for j = 1:length(idxs)
     end
     dist_pro = real(dist_pro);
     dist_pro = max(dist_pro, 0);
-
+    dist_pro = sqrt(dist_pro);
+    
     % apply exclusion zone
     exc_zone_st = max(1, idx - exc_zone);
     exc_zone_ed = min(pro_len, idx + exc_zone);
@@ -114,7 +115,7 @@ for j = 1:length(idxs)
         pro_idx(update_idx, k) = idx;
     end
 end
-pro_mul = sqrt(pro_mul);
+% pro_mul = sqrt(pro_mul);
 
 
 %% The following two functions are modified from the code provided in the following URL

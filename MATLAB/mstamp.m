@@ -107,6 +107,8 @@ for i = 1:pro_len
             ./ (data_sig .* repmat(data_sig(i, :), pro_len, 1)));
     end
     dist_pro = real(dist_pro);
+    dist_pro = max(dist_pro, 0);
+    dist_pro = sqrt(dist_pro);
     drop_val(:) = query(1, :);
 
     % apply exclusion zone
@@ -141,7 +143,7 @@ for i = 1:pro_len
 end
 
 %% remove bad k setting in the returned matrix
-pro_mul = sqrt(pro_mul);
+% pro_mul = sqrt(pro_mul);
 pro_mul(:, 1:(n_must - 1)) = nan;
 pro_mul(:, (n_dim - n_exc + 1):end) = nan;
 pro_idx(:, 1:(n_must - 1)) = nan;

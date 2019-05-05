@@ -126,6 +126,7 @@ parfor i = 1:n_work
         end
         dist_pro = real(dist_pro);
         dist_pro = max(dist_pro, 0);
+        dist_pro = sqrt(dist_pro);
         drop_val = query(1, :);
 
         % apply exclusion zone
@@ -150,7 +151,7 @@ parfor i = 1:n_work
             pro_idxs{i}(j, k) = min_idx;
         end
     end
-    pro_muls{i} = sqrt(pro_muls{i});
+%     pro_muls{i} = sqrt(pro_muls{i});
 end
 
 %% merge workers' result
