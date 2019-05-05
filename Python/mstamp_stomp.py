@@ -123,6 +123,7 @@ def mstamp(seq, sub_len, return_dimension=False):
         dist_profile[:, exc_zone_st:exc_zone_ed] = np.inf
         dist_profile[:, skip_loc] = np.inf
         dist_profile[seq_sig < _EPS] = np.inf
+        dist_profile = np.sqrt(dist_profile)
 
         dist_profile_dim = np.argsort(dist_profile, axis=0)
         dist_profile_sort = np.sort(dist_profile, axis=0)
@@ -137,7 +138,7 @@ def mstamp(seq, sub_len, return_dimension=False):
                 profile_dimension[j][:, update_pos] = \
                     dist_profile_dim[:j + 1, update_pos]
 
-    matrix_profile = np.sqrt(matrix_profile)
+    # matrix_profile = np.sqrt(matrix_profile)
     if return_dimension:
         return matrix_profile, profile_index, profile_dimension
     else:
